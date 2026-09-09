@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ARCO HUB QTMD - Derechos ARCO</title>
+    <!-- ========================================================
+    AUTOR: María Isabel Egaña Bacarreza
+    RUT: 11.347.767-9
+    VERSIÓN: 1.0
+    OBRA REGISTRADA BAJO LEY DE PROPIEDAD INTELECTUAL N°17.336
+    ======================================================== -->
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            background: #f4f7fc;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+        .card-shadow {
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+        }
+        .step-indicator .step-circle {
+            transition: all 0.3s ease;
+        }
+        .otp-input {
+            width: 3.5rem;
+            height: 4.5rem;
+            font-size: 2rem;
+            text-align: center;
+            border-radius: 12px;
+            border: 2px solid #d1d5db;
+            transition: 0.2s;
+        }
+        .otp-input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+            outline: none;
+        }
+        .fade-in {
+            animation: fadeIn 0.4s ease;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .institution-item:hover {
+            background-color: #eff6ff;
+            border-color: #3b82f6;
+            cursor: pointer;
+        }
+        .template-badge:hover {
+            background-color: #dbeafe;
+            border-color: #3b82f6;
+            cursor: pointer;
+        }
+        .file-drop-zone {
+            border: 2px dashed #cbd5e1;
+            transition: 0.2s;
+        }
+        .file-drop-zone:hover,
+        .file-drop-zone.dragover {
+            border-color: #3b82f6;
+            background-color: #f8fafc;
+        }
+        .biometric-preview {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            overflow: hidden;
+            max-width: 200px;
+            max-height: 150px;
+            object-fit: cover;
+        }
+        .btn-verification:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .destruction-badge {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #86efac;
+        }
+        #otp-inputs input {
+            width: 3.5rem;
+            height: 4.5rem;
+            font-size: 2rem;
+            text-align: center;
+            border-radius: 12px;
+            border: 2px solid #d1d5db;
+            transition: 0.2s;
+        }
+        #otp-inputs input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app" class="max-w-3xl mx-auto p-4 md:p-6 mt-6 mb-10">
+
+        <!-- HEADER -->
+        <div class="text-center mb-8">
+            <div class="flex items-center justify-center gap-2 text-3xl font-bold text-gray-800">
+                <i class="fas fa-shield-alt text-blue-600"></i>
+                <span>ARCO HUB QTMD</span>
+            </div>
+            <p class="text-gray-500 text-sm">Plataforma de Ejercicio de Derechos ARCO con Autenticación Proporcional</p>
+            <div class="mt-2 inline-flex items-center gap-1 bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full border border-blue-200">
+                <i class="fas fa-check-circle"></i> v1.0 | Estándar GDPR / eIDAS 2.0
+            </div>
+            <div class="mt-1 text-[10px] text-gray-400">
+                Autor: María Isabel Egaña Bacarreza · RUT: 11.347.767-9
+            </div>
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- PASO 0: BUSCADOR                                          -->
+        <!-- ========================================================= -->
+        <div id="step-0" class="bg-white rounded-2xl card-shadow p-6 md:p-8 fade-in">
+            <div class="flex items-center gap-2 text-sm text-blue-600 font-semibold mb-1">
+                <i class="fas fa-building"></i> Paso 1 de 8
+            </div>
+            <h2 class="text-xl font-semibold text-gray-700">Selecciona la institución</h2>
+            <p class="text-gray-400 text-sm mb-4">Banco, fintech, retail o salud.</p>
+
+            <div class="relative">
+                <i class="fas fa-search absolute left-3 top-3.5 text-gray-400"></i>
+                <input type="text" id="search-input" placeholder="Ej: Banco de Chile, Mercado Pago..."
+                class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+            </div>
+
+            <div class="flex flex-wrap gap-2 mt-4">
+                <button data-filter="all" class="filter-btn px-4 py-1.5 rounded-full text-sm font-medium bg-blue-600 text-white border border-blue-600">Todos</button>
+                <button data-filter="banco" class="filter-btn px-4 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 border border-gray-300 hover:bg-gray-200">🏦 Bancos</button>
+                <button data-filter="fintech" class="filter-btn px-4 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 border border-gray-300 hover:bg-gray-200">📱 Fintech</button>
+                <button data-filter="retail" class="filter-btn px-4 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 border border-gray-300 hover:bg-gray-200">🛒 Retail</button>
+                <button data-filter="salud" class="filter-btn px-4 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 border border-gray-300 hover:bg-gray-200">🏥 Salud</button>
+            </div>
+
+            <div id="institution-list" class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-3 max-h-72 overflow-y-auto">
+                <!-- Inyectado por JS -->
+            </div>
+            <p id="no-results" class="text-center text-gray-400 mt-4 hidden">No hay resultados.</p>
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- PASO 1: SELECCIÓN DE TIPO (determina Nivel de riesgo)    -->
+        <!-- ========================================================= -->
+        <div id="step-1" class="hidden bg-white rounded-2xl card-shadow p-6 md:p-8 fade-in">
+            <div class="flex items-center gap-2 text-sm text-blue-600 font-semibold mb-1">
+                <i class="fas fa-flag"></i> Paso 2 de 8
+            </div>
+            <h2 class="text-xl font-semibold text-gray-700">¿Qué derecho ARCO quieres ejercer?</h2>
+            <p class="text-gray-400 text-sm mb-4">Según el tipo, usaremos un nivel de autenticación proporcional al riesgo.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <label class="flex items-start gap-3 p-3 border border-gray-200 rounded-xl hover:bg-gray-50 cursor-pointer transition">
+                    <input type="radio" name="arco-type" value="acceso" class="mt-1 w-4 h-4 text-blue-600">
+                    <div>
+                        <span class="font-medium text-gray-800"><i class="fas fa-eye text-blue-500 mr-1"></i> Acceso</span>
+                        <p class="text-xs text-gray-400">Solicitar copia de tus datos.</p>
+                        <span class="text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Nivel 1 (OTP)</span>
+                    </div>
+                </label>
+                <label class="flex items-start gap-3 p-3 border border-gray-200 rounded-xl hover:bg-gray-50 cursor-pointer transition">
+                    <input type="radio" name="arco-type" value="rectificacion" class="mt-1 w-4 h-4 text-blue-600">
+                    <div>
+                        <span class="font-medium text-gray-800"><i class="fas fa-pen text-blue-500 mr-1"></i> Rectificación</span>
+                        <p class="text-xs text-gray-400">Corregir información errónea.</p>
+                        <span class="text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Nivel 1 (OTP)</span>
+                    </div>
+                </label>
+                <label class="flex items-start gap-3 p-3 border border-gray-200 rounded-xl hover:bg-gray-50 cursor-pointer transition">
+                    <input type="radio" name="arco-type" value="supresion" class="mt-1 w-4 h-4 text-blue-600">
+                    <div>
+                        <span class="font-medium text-gray-800"><i class="fas fa-trash text-red-500 mr-1"></i> Supresión</span>
+                        <p class="text-xs text-gray-400">Eliminar datos cuando ya no sean necesarios.</p>
+                        <span class="text-[10px] bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full">Nivel 3 (Biométrico)</span>
+                    </div>
+                </label>
+                <label class="flex items-start gap-3 p-3 border border-gray-200 rounded-xl hover:bg-gray-50 cursor-pointer transition">
+                    <input type="radio" name="arco-type" value="portabilidad" class="mt-1 w-4 h-4 text-blue-600">
+                    <div>
+                        <span class="font-medium text-gray-800"><i class="fas fa-arrow-right-arrow-left text-red-500 mr-1"></i> Portabilidad</span>
+                        <p class="text-xs text-gray-400">Recibir datos en formato estructurado.</p>
+                        <span class="text-[10px] bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full">Nivel 3 (Biométrico)</span>
+                    </div>
+                </label>
+                <label class="flex items-start gap-3 p-3 border border-gray-200 rounded-xl hover:bg-gray-50 cursor-pointer transition">
+                    <input type="radio" name="arco-type" value="oposicion" class="mt-1 w-4 h-4 text-blue-600">
+                    <div>
+                        <span class="font-medium text-gray-800"><i class="fas fa-ban text-red-500 mr-1"></i> Oposición</span>
+                        <p class="text-xs text-gray-400">Negarte a tratamientos automatizados.</p>
+                        <span class="text-[10px] bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full">Nivel 3 (Biométrico)</span>
+                    </div>
+                </label>
+            </div>
+
+            <button id="btn-continue-type" class="mt-6 px-6 py-2.5 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition w-full md:w-auto">
+                Continuar <i class="fas fa-chevron-right ml-1"></i>
+            </button>
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- PASO 2: AUTENTICACIÓN NIVEL 1 (OTP)                      -->
+        <!-- ========================================================= -->
+        <div id="step-2-otp" class="hidden bg-white rounded-2xl card-shadow p-6 md:p-8 fade-in">
+            <div class="flex items-center gap-2 text-sm text-blue-600 font-semibold mb-1">
+                <i class="fas fa-id-card"></i> Paso 3 de 8: Nivel 1 (OTP)
+            </div>
+            <h2 class="text-xl font-semibold text-gray-700">Verificación por correo electrónico</h2>
+            <p class="text-gray-400 text-sm mb-5">Ingresa tu RUT y correo (registrado en la institución).</p>
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-600 mb-1">RUT</label>
+                <input type="text" id="rut-input-otp" placeholder="12.345.678-9" class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+            </div>
+            <div class="mb-5">
+                <label class="block text-sm font-medium text-gray-600 mb-1">Correo electrónico</label>
+                <input type="email" id="email-input-otp" placeholder="tu@correo.cl" class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+            </div>
+
+            <button id="btn-send-otp" class="px-6 py-2.5 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition">
+                <i class="fas fa-paper-plane mr-2"></i> Enviar código OTP
+            </button>
+            <div id="otp-timer" class="hidden text-sm text-gray-400 mt-2">Reenviar en <span id="timer-count">60</span>s</div>
+
+            <div id="simulated-email-box" class="mt-5 p-4 bg-yellow-50 border border-yellow-200 rounded-xl hidden">
+                <p class="text-sm text-yellow-700"><i class="fas fa-envelope mr-2"></i> <strong>Simulación:</strong> Código <span id="display-otp-code" class="font-mono font-bold text-blue-600">------</span> enviado a <span id="display-email-sent" class="font-medium">---</span>.</p>
+            </div>
+
+            <div id="otp-verify-area" class="hidden mt-4">
+                <p class="text-sm text-gray-600 mb-3">Ingresa el código de 6 dígitos:</p>
+                <div class="flex justify-center gap-2 md:gap-4 my-3" id="otp-inputs">
+                    <input type="text" maxlength="1" class="otp-input" data-index="0">
+                    <input type="text" maxlength="1" class="otp-input" data-index="1">
+                    <input type="text" maxlength="1" class="otp-input" data-index="2">
+                    <input type="text" maxlength="1" class="otp-input" data-index="3">
+                    <input type="text" maxlength="1" class="otp-input" data-index="4">
+                    <input type="text" maxlength="1" class="otp-input" data-index="5">
+                </div>
+                <div id="otp-error" class="text-red-500 text-sm text-center h-6"></div>
+                <button id="btn-verify-otp" class="px-8 py-2.5 bg-green-600 text-white rounded-xl font-medium hover:bg-green-700 transition">
+                    <i class="fas fa-check mr-2"></i> Verificar
+                </button>
+                <button id="btn-resend-otp" class="text-sm text-blue-500 hover:underline block mt-2">Reenviar código</button>
+            </div>
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- PASO 3: AUTENTICACIÓN NIVEL 3 (BIOMÉTRICO FACIAL)        -->
+        <!-- ========================================================= -->
+        <div id="step-3-biometric" class="hidden bg-white rounded-2xl card-shadow p-6 md:p-8 fade-in">
+            <div class="flex items-center gap-2 text-sm text-blue-600 font-semibold mb-1">
+                <i class="fas fa-fingerprint"></i> Paso 3 de 8: Nivel 3 (Biométrico)
+            </div>
+            <h2 class="text-xl font-semibold text-gray-700">Verificación facial con destrucción inmediata</h2>
+            <p class="text-gray-400 text-sm mb-4">Para solicitudes de alto riesgo, necesitamos verificar tu identidad con tu rostro y cédula. <strong>Las imágenes se destruyen tras la verificación</strong> (GDPR Art. 5).</p>
+
+            <!-- Campo RUT para nivel 3 -->
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-600 mb-1">RUT</label>
+                <input type="text" id="rut-input-bio" placeholder="12.345.678-9" class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-600 mb-1">Selfie</label>
+                    <div id="selfie-container" class="relative bg-gray-100 rounded-xl overflow-hidden h-48 flex items-center justify-center border-2 border-dashed border-gray-300">
+                        <video id="selfie-video" autoplay playsinline muted class="hidden w-full h-full object-cover"></video>
+                        <img id="selfie-image" class="hidden w-full h-full object-cover" alt="Selfie capturada" />
+                        <span id="selfie-placeholder" class="text-gray-400 text-sm"><i class="fas fa-camera mr-1"></i> Sin selfie</span>
+                    </div>
+                    <button id="btn-take-selfie" class="mt-2 px-4 py-1.5 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition">
+                        <i class="fas fa-camera mr-1"></i> Tomar selfie
+                    </button>
+                    <button id="btn-retake-selfie" class="hidden mt-2 px-4 py-1.5 bg-gray-200 text-gray-700 text-sm rounded-lg hover:bg-gray-300 transition ml-2">
+                        <i class="fas fa-redo mr-1"></i> Repetir
+                    </button>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-600 mb-1">Cédula de Identidad</label>
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-medium text-gray-500 w-16">Anverso:</span>
+                            <div class="flex-1 bg-gray-100 rounded-lg h-12 flex items-center justify-center border border-gray-200 text-xs text-gray-400" id="cedula-front-preview">
+                                <i class="fas fa-id-card mr-1"></i> No capturado
+                            </div>
+                            <button class="btn-capture-cedula px-3 py-1 bg-blue-600 text-white text-xs rounded-lg hover:bg-blue-700 transition" data-side="front">
+                                <i class="fas fa-camera"></i>
+                            </button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-medium text-gray-500 w-16">Reverso:</span>
+                            <div class="flex-1 bg-gray-100 rounded-lg h-12 flex items-center justify-center border border-gray-200 text-xs text-gray-400" id="cedula-back-preview">
+                                <i class="fas fa-id-card mr-1"></i> No capturado
+                            </div>
+                            <button class="btn-capture-cedula px-3 py-1 bg-blue-600 text-white text-xs rounded-lg hover:bg-blue-700 transition" data-side="back">
+                                <i class="fas fa-camera"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text-[10px] text-gray-400 mt-1">En producción, usarías la cámara para capturar ambos lados.</p>
+                </div>
+            </div>
+
+            <div class="mt-6 flex items-center gap-4 flex-wrap">
+                <button id="btn-verify-biometric" class="px-6 py-2.5 bg-green-600 text-white rounded-xl font-medium hover:bg-green-700 transition btn-verification" disabled>
+                    <i class="fas fa-check-circle mr-1"></i> Verificar identidad
+                </button>
+                <span id="biometric-status" class="text-sm text-gray-500"></span>
+                <span id="destruction-notice" class="hidden text-xs destruction-badge px-3 py-1 rounded-full">
+                    <i class="fas fa-trash-alt mr-1"></i> Datos biométricos destruidos
+                </span>
+            </div>
+
+            <div id="verification-progress" class="hidden mt-4 p-4 bg-blue-50 border border-blue-200 rounded-xl">
+                <p class="text-sm text-blue-700"><i class="fas fa-spinner fa-spin mr-2"></i> Verificando identidad con proveedor biométrico...</p>
+                <div class="w-full bg-gray-200 rounded-full h-1.5 mt-2">
+                    <div class="bg-blue-600 h-1.5 rounded-full" style="width: 0%;" id="progress-bar"></div>
+                </div>
+            </div>
+
+            <div id="biometric-success" class="hidden mt-4 p-4 bg-green-50 border border-green-200 rounded-xl">
+                <p class="text-sm text-green-700"><i class="fas fa-check-circle mr-2"></i> <strong>Identidad verificada correctamente.</strong> Las fotos han sido destruidas.</p>
+            </div>
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- WIZARD ARCO (Pasos 4–7)                                  -->
+        <!-- ========================================================= -->
+        <div id="wizard-container" class="hidden">
+            <div class="flex items-center justify-between mb-5 bg-white p-3 rounded-xl card-shadow">
+                <div class="flex items-center gap-3 text-sm text-gray-500">
+                    <i class="fas fa-arrow-left text-blue-600 cursor-pointer hover:text-blue-800" id="btn-back-to-search" title="Volver al buscador"></i>
+                    <span class="font-medium"><span id="selected-inst-name" class="text-blue-600">-</span></span>
+                    <span class="text-xs bg-green-100 px-2 py-0.5 rounded-full text-green-700"><i class="fas fa-check-circle"></i> <span id="auth-badge">Verificado</span></span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="text-sm font-semibold text-gray-500"><span id="current-step-num">4</span>/8</span>
+                    <div class="flex gap-1">
+                        <div class="step-circle w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold bg-blue-600 text-white" data-step="4">4</div>
+                        <div class="step-circle w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold bg-gray-200 text-gray-500" data-step="5">5</div>
+                        <div class="step-circle w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold bg-gray-200 text-gray-500" data-step="6">6</div>
+                        <div class="step-circle w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold bg-gray-200 text-gray-500" data-step="7">7</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="step-content" class="bg-white rounded-2xl card-shadow p-6 md:p-8 fade-in">
+                <!-- Renderizado por JS -->
+            </div>
+
+            <div class="flex justify-between mt-6">
+                <button id="btn-prev" class="px-6 py-2.5 border border-gray-300 rounded-xl text-gray-600 font-medium hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed">
+                    <i class="fas fa-chevron-left mr-1"></i> Anterior
+                </button>
+                <button id="btn-next" class="px-6 py-2.5 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed">
+                    Siguiente <i class="fas fa-chevron-right ml-1"></i>
+                </button>
+                <button id="btn-submit" class="hidden px-6 py-2.5 bg-green-600 text-white rounded-xl font-medium hover:bg-green-700">
+                    <i class="fas fa-paper-plane mr-1"></i> Enviar Solicitud
+                </button>
+            </div>
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- MODAL DE CONFIRMACIÓN FINAL                               -->
+        <!-- ========================================================= -->
+        <div id="confirmation-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center hidden z-50 p-4">
+            <div class="bg-white max-w-md w-full rounded-2xl p-6 text-center shadow-2xl fade-in">
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-check text-green-600 text-3xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800">¡Solicitud Verificada!</h3>
+                <p class="text-gray-500 mt-2">Tu solicitud ARCO ha sido generada con identidad verificada.</p>
+                <div class="mt-3 text-left bg-gray-50 p-3 rounded-lg text-xs text-gray-500">
+                    <p><strong>Institución:</strong> <span id="modal-inst" class="font-medium">---</span></p>
+                    <p><strong>Tipo:</strong> <span id="modal-type" class="font-medium">---</span></p>
+                    <p><strong>Nivel de autenticación:</strong> <span id="modal-auth-level" class="font-medium">---</span></p>
+                    <p><strong>RUT verificado:</strong> <span id="modal-rut" class="font-mono">---</span></p>
+                    <p class="mt-1 text-green-600"><i class="fas fa-trash-alt mr-1"></i> Datos biométricos destruidos (si aplica)</p>
+                </div>
+                <button id="modal-close-btn" class="mt-5 px-6 py-2 bg-gray-200 rounded-xl font-medium hover:bg-gray-300">Cerrar</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ================================================================
+        // ARCO HUB QTMD v1.0
+        // Autor: María Isabel Egaña Bacarreza - RUT: 11.347.767-9
+        // ================================================================
+
+        // ================================================================
+        // 1. BASE DE DATOS DE INSTITUCIONES
+        // ================================================================
+        const institutions = [
+            { id: 1, name: "Banco de Chile", category: "banco", email: "derechosarco@bancochile.cl", logo: "🏦" },
+            { id: 2, name: "Banco Santander", category: "banco", email: "protecciondedatos@santander.cl", logo: "🏦" },
+            { id: 3, name: "BCI", category: "banco", email: "arco@bci.cl", logo: "🏦" },
+            { id: 4, name: "Banco Estado", category: "banco", email: "consultas.arco@bancoestado.cl", logo: "🏦" },
+            { id: 5, name: "Scotiabank", category: "banco", email: "arco@scotiabank.cl", logo: "🏦" },
+            { id: 6, name: "ITAU", category: "banco", email: "datospersonales@itau.cl", logo: "🏦" },
+            { id: 7, name: "Mercado Pago", category: "fintech", email: "privacidad@mercadopago.cl", logo: "📱" },
+            { id: 8, name: "Tenpo", category: "fintech", email: "datos@tenpo.cl", logo: "📱" },
+            { id: 9, name: "Fpay (Falabella)", category: "fintech", email: "arco@falabella.cl", logo: "📱" },
+            { id: 10, name: "Cencosud", category: "retail", email: "datos@cencosud.cl", logo: "🛒" },
+            { id: 11, name: "Ripley", category: "retail", email: "protecciondedatos@ripley.cl", logo: "🛒" },
+            { id: 12, name: "Isapre Colmena", category: "salud", email: "arco@colmena.cl", logo: "🏥" },
+            { id: 13, name: "Isapre Banmédica", category: "salud", email: "datos@banmedica.cl", logo: "🏥" },
+        ];
+
+        // ================================================================
+        // 2. ESTADO GLOBAL
+        // ================================================================
+        const state = {
+            currentStep: 0,
+            selectedInstitution: null,
+            arcoType: null,
+            rut: '',
+            email: '',
+            otpCode: '',
+            selfieImage: null,
+            cedulaFront: null,
+            cedulaBack: null,
+            biometricVerified: false,
+            isVerified: false,
+            verificationMethod: '',
+            selectedCategories: [],
+            justification: '',
+            files: [],
+        };
+
+        // ================================================================
+        // 3. DOM REFS
+        // ================================================================
+        const $ = (id) => document.getElementById(id);
+        const step0 = $('step-0');
+        const step1 = $('step-1');
+        const step2Otp = $('step-2-otp');
+        const step3Bio = $('step-3-biometric');
+        const wizardContainer = $('wizard-container');
+        const stepContent = $('step-content');
+        const btnPrev = $('btn-prev');
+        const btnNext = $('btn-next');
+        const btnSubmit = $('btn-submit');
+        const btnBackToSearch = $('btn-back-to-search');
+        const currentStepNum = $('current-step-num');
+        const selectedInstName = $('selected-inst-name');
+        const stepCircles = document.querySelectorAll('.step-circle');
+        const searchInput = $('search-input');
+        const institutionList = $('institution-list');
+        const noResults = $('no-results');
+
+        const rutInputOtp = $('rut-input-otp');
+        const emailInputOtp = $('email-input-otp');
+        const btnSendOtp = $('btn-send-otp');
+        const otpTimer = $('otp-timer');
+        const timerCount = $('timer-count');
+        const simulatedBox = $('simulated-email-box');
+        const displayOtpCode = $('display-otp-code');
+        const displayEmailSent = $('display-email-sent');
+        const otpVerifyArea = $('otp-verify-area');
+        const otpInputs = document.querySelectorAll('#otp-inputs .otp-input');
+        const btnVerifyOtp = $('btn-verify-otp');
+        const btnResendOtp = $('btn-resend-otp');
+        const otpError = $('otp-error');
+
+        const rutInputBio = $('rut-input-bio');
+        const selfieVideo = $('selfie-video');
+        const selfieImage = $('selfie-image');
+        const selfiePlaceholder = $('selfie-placeholder');
+        const btnTakeSelfie = $('btn-take-selfie');
+        const btnRetakeSelfie = $('btn-retake-selfie');
+        const cedulaFrontPreview = $('cedula-front-preview');
+        const cedulaBackPreview = $('cedula-back-preview');
+        const btnVerifyBiometric = $('btn-verify-biometric');
+        const biometricStatus = $('biometric-status');
+        const destructionNotice = $('destruction-notice');
+        const verificationProgress = $('verification-progress');
+        const progressBar = $('progress-bar');
+        const biometricSuccess = $('biometric-success');
+
+        const modal = $('confirmation-modal');
+        const modalInst = $('modal-inst');
+        const modalType = $('modal-type');
+        const modalAuthLevel = $('modal-auth-level');
+        const modalRut = $('modal-rut');
+        const modalCloseBtn = $('modal-close-btn');
+        const authBadge = $('auth-badge');
+
+        let otpTimerInterval = null;
+        let generatedOtp = '';
+        let stream = null;
+
+        // ================================================================
+        // 4. BUSCADOR
+        // ================================================================
+        let currentFilter = 'all';
+
+        function renderInstitutions(filter = 'all', query = '') {
+            let filtered = institutions;
+            if (filter !== 'all') filtered = filtered.filter(i => i.category === filter);
+            if (query.trim()) {
+                const q = query.toLowerCase().trim();
+                filtered = filtered.filter(i => i.name.toLowerCase().includes(q));
+            }
+            if (!filtered.length) {
+                institutionList.innerHTML = '';
+                noResults.classList.remove('hidden');
+                return;
+            }
+            noResults.classList.add('hidden');
+            institutionList.innerHTML = filtered.map(inst => `
+                <div data-id="${inst.id}" class="institution-item p-3 border border-gray-200 rounded-xl transition flex items-center gap-3">
+                    <span class="text-2xl">${inst.logo}</span>
+                    <div class="flex-1">
+                        <p class="font-semibold text-gray-800">${inst.name}</p>
+                        <p class="text-xs text-gray-400">${inst.email}</p>
+                    </div>
+                    <span class="text-xs bg-gray-100 px-2 py-0.5 rounded-full capitalize text-gray-500">${inst.category}</span>
+                </div>
+            `).join('');
+            document.querySelectorAll('.institution-item').forEach(el => {
+                el.addEventListener('click', () => {
+                    const id = parseInt(el.dataset.id);
+                    const inst = institutions.find(i => i.id === id);
+                    if (inst) goToStep1(inst);
+                });
+            });
+        }
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => {
+                    b.classList.remove('bg-blue-600', 'text-white', 'border-blue-600');
+                    b.classList.add('bg-gray-100', 'text-gray-700', 'border-gray-300');
+                });
+                btn.classList.remove('bg-gray-100', 'text-gray-700', 'border-gray-300');
+                btn.classList.add('bg-blue-600', 'text-white', 'border-blue-600');
+                currentFilter = btn.dataset.filter;
+                renderInstitutions(currentFilter, searchInput.value);
+            });
+        });
+        searchInput.addEventListener('input', (e) => renderInstitutions(currentFilter, e.target.value));
+
+        // ================================================================
+        // 5. NAVEGACIÓN
+        // ================================================================
+        function showStep(step) {
+            step0.classList.add('hidden');
+            step1.classList.add('hidden');
+            step2Otp.classList.add('hidden');
+            step3Bio.classList.add('hidden');
+            wizardContainer.classList.add('hidden');
+
+            if (step === 0) step0.classList.remove('hidden');
+            else if (step === 1) step1.classList.remove('hidden');
+            else if (step === 2) step2Otp.classList.remove('hidden');
+            else if (step === 3) step3Bio.classList.remove('hidden');
+            else if (step >= 4 && step <= 7) {
+                wizardContainer.classList.remove('hidden');
+                state.currentStep = step;
+                renderWizardStep(step);
+                updateWizardUI(step);
+            }
+        }
+
+        function goToStep1(inst) {
+            state.selectedInstitution = inst;
+            state.arcoType = null;
+            state.isVerified = false;
+            state.biometricVerified = false;
+            state.rut = '';
+            state.email = '';
+            state.selfieImage = null;
+            state.cedulaFront = null;
+            state.cedulaBack = null;
+            document.querySelectorAll('input[name="arco-type"]').forEach(el => el.checked = false);
+            showStep(1);
+        }
+
+        // ================================================================
+        // 6. PASO 1: TIPO
+        // ================================================================
+        document.getElementById('btn-continue-type').addEventListener('click', () => {
+            const selected = document.querySelector('input[name="arco-type"]:checked');
+            if (!selected) { alert('Selecciona un tipo de solicitud.'); return; }
+            state.arcoType = selected.value;
+            const isHighRisk = ['supresion', 'portabilidad', 'oposicion'].includes(state.arcoType);
+            if (isHighRisk) {
+                showStep(3);
+                initBiometric();
+                rutInputBio.value = '';
+            } else {
+                showStep(2);
+                generatedOtp = '';
+                otpInputs.forEach(inp => inp.value = '');
+                otpError.textContent = '';
+                simulatedBox.classList.add('hidden');
+                otpVerifyArea.classList.add('hidden');
+                if (otpTimerInterval) clearInterval(otpTimerInterval);
+                otpTimer.classList.add('hidden');
+                btnSendOtp.disabled = false;
+                rutInputOtp.value = '';
+                emailInputOtp.value = '';
+            }
+        });
+
+        // ================================================================
+        // 7. NIVEL 1: OTP
+        // ================================================================
+        function startOtpTimer(seconds = 60) {
+            if (otpTimerInterval) clearInterval(otpTimerInterval);
+            otpTimer.classList.remove('hidden');
+            let remaining = seconds;
+            timerCount.textContent = remaining;
+            otpTimerInterval = setInterval(() => {
+                remaining--;
+                timerCount.textContent = remaining;
+                if (remaining <= 0) {
+                    clearInterval(otpTimerInterval);
+                    otpTimer.classList.add('hidden');
+                    btnSendOtp.disabled = false;
+                }
+            }, 1000);
+            btnSendOtp.disabled = true;
+        }
+
+        btnSendOtp.addEventListener('click', () => {
+            const rut = rutInputOtp.value.trim();
+            const email = emailInputOtp.value.trim();
+            if (!rut || !email) { alert('Ingresa RUT y correo.'); return; }
+            state.rut = rut;
+            state.email = email;
+            generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
+            displayEmailSent.textContent = email;
+            displayOtpCode.textContent = generatedOtp;
+            simulatedBox.classList.remove('hidden');
+            otpVerifyArea.classList.remove('hidden');
+            startOtpTimer(60);
+            otpInputs[0].focus();
+        });
+
+        otpInputs.forEach((input, idx) => {
+            input.addEventListener('input', (e) => {
+                e.target.value = e.target.value.replace(/\D/g, '');
+                if (e.target.value && idx < 5) otpInputs[idx + 1].focus();
+            });
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && !e.target.value && idx > 0) otpInputs[idx - 1].focus();
+            });
+        });
+
+        btnVerifyOtp.addEventListener('click', () => {
+            const entered = Array.from(otpInputs).map(inp => inp.value).join('');
+            if (entered.length !== 6) { otpError.textContent = 'Ingresa los 6 dígitos.'; return; }
+            if (entered === generatedOtp) {
+                state.isVerified = true;
+                state.verificationMethod = 'OTP (Nivel 1)';
+                otpError.textContent = '✅ Identidad verificada.';
+                otpError.className = 'text-green-500 text-sm text-center h-6';
+                authBadge.textContent = 'OTP verificado';
+                selectedInstName.textContent = state.selectedInstitution.name;
+                setTimeout(() => goToWizard(), 500);
+            } else {
+                otpError.textContent = '❌ Código incorrecto.';
+                otpInputs.forEach(inp => inp.value = '');
+                otpInputs[0].focus();
+            }
+        });
+
+        btnResendOtp.addEventListener('click', () => {
+            if (!state.email) return;
+            generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
+            displayOtpCode.textContent = generatedOtp;
+            simulatedBox.classList.remove('hidden');
+            otpInputs.forEach(inp => inp.value = '');
+            otpError.textContent = '';
+            startOtpTimer(60);
+        });
+
+        // ================================================================
+        // 8. NIVEL 3: BIOMÉTRICO
+        // ================================================================
+        async function initBiometric() {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                stream = null;
+            }
+            selfieImage.classList.add('hidden');
+            selfieVideo.classList.add('hidden');
+            selfiePlaceholder.classList.remove('hidden');
+            btnRetakeSelfie.classList.add('hidden');
+            btnTakeSelfie.classList.remove('hidden');
+            cedulaFrontPreview.innerHTML = '<i class="fas fa-id-card mr-1"></i> No capturado';
+            cedulaBackPreview.innerHTML = '<i class="fas fa-id-card mr-1"></i> No capturado';
+            state.selfieImage = null;
+            state.cedulaFront = null;
+            state.cedulaBack = null;
+            biometricSuccess.classList.add('hidden');
+            verificationProgress.classList.add('hidden');
+            destructionNotice.classList.add('hidden');
+            btnVerifyBiometric.disabled = true;
+            biometricStatus.textContent = '';
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false });
+                selfieVideo.srcObject = stream;
+                selfieVideo.classList.remove('hidden');
+                selfiePlaceholder.classList.add('hidden');
+                await selfieVideo.play();
+            } catch (err) {
+                selfiePlaceholder.textContent = '⚠️ Cámara no disponible. Usa un navegador con soporte.';
+                console.warn('Camera error:', err);
+            }
+        }
+
+        btnTakeSelfie.addEventListener('click', () => {
+            if (!stream) { alert('Cámara no disponible.'); return; }
+            const canvas = document.createElement('canvas');
+            canvas.width = selfieVideo.videoWidth || 640;
+            canvas.height = selfieVideo.videoHeight || 480;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(selfieVideo, 0, 0, canvas.width, canvas.height);
+            const dataUrl = canvas.toDataURL('image/jpeg');
+            state.selfieImage = dataUrl;
+            selfieImage.src = dataUrl;
+            selfieImage.classList.remove('hidden');
+            selfieVideo.classList.add('hidden');
+            btnTakeSelfie.classList.add('hidden');
+            btnRetakeSelfie.classList.remove('hidden');
+            selfiePlaceholder.classList.add('hidden');
+            checkBiometricReady();
+        });
+
+        btnRetakeSelfie.addEventListener('click', () => {
+            state.selfieImage = null;
+            selfieImage.classList.add('hidden');
+            selfieVideo.classList.remove('hidden');
+            btnTakeSelfie.classList.remove('hidden');
+            btnRetakeSelfie.classList.add('hidden');
+            checkBiometricReady();
+        });
+
+        document.querySelectorAll('.btn-capture-cedula').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const side = btn.dataset.side;
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'image/*';
+                input.onchange = (e) => {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    const reader = new FileReader();
+                    reader.onload = (ev) => {
+                        const dataUrl = ev.target.result;
+                        if (side === 'front') {
+                            state.cedulaFront = dataUrl;
+                            cedulaFrontPreview.innerHTML =
+                                `<img src="${dataUrl}" class="h-10 w-auto rounded object-cover" alt="Cédula anverso" />`;
+                        } else {
+                            state.cedulaBack = dataUrl;
+                            cedulaBackPreview.innerHTML =
+                                `<img src="${dataUrl}" class="h-10 w-auto rounded object-cover" alt="Cédula reverso" />`;
+                        }
+                        checkBiometricReady();
+                    };
+                    reader.readAsDataURL(file);
+                };
+                input.click();
+            });
+        });
+
+        function checkBiometricReady() {
+            const rut = rutInputBio.value.trim();
+            const ready = state.selfieImage && state.cedulaFront && state.cedulaBack && rut.length > 0;
+            btnVerifyBiometric.disabled = !ready;
+            if (ready) {
+                biometricStatus.textContent = '✅ Todos los datos capturados. Listo para verificar.';
+                biometricStatus.className = 'text-sm text-green-600';
+            } else {
+                biometricStatus.textContent = 'Faltan: RUT, selfie, cédula anverso o reverso.';
+                biometricStatus.className = 'text-sm text-gray-500';
+            }
+        }
+
+        rutInputBio.addEventListener('input', checkBiometricReady);
+
+        btnVerifyBiometric.addEventListener('click', async () => {
+            const rut = rutInputBio.value.trim();
+            if (!rut || !state.selfieImage || !state.cedulaFront || !state.cedulaBack) return;
+            state.rut = rut;
+
+            btnVerifyBiometric.disabled = true;
+            verificationProgress.classList.remove('hidden');
+            progressBar.style.width = '0%';
+            biometricStatus.textContent = 'Verificando...';
+            biometricStatus.className = 'text-sm text-blue-600';
+
+            for (let i = 0; i <= 100; i += 20) {
+                await new Promise(r => setTimeout(r, 300));
+                progressBar.style.width = i + '%';
+            }
+
+            await new Promise(r => setTimeout(r, 500));
+            verificationProgress.classList.add('hidden');
+            biometricSuccess.classList.remove('hidden');
+            state.biometricVerified = true;
+            state.isVerified = true;
+            state.verificationMethod = 'Biométrico (Nivel 3)';
+            authBadge.textContent = 'Biométrico verificado';
+            selectedInstName.textContent = state.selectedInstitution.name;
+            biometricStatus.textContent = '✅ Verificación exitosa. Datos destruidos.';
+            biometricStatus.className = 'text-sm text-green-600';
+
+            // Destrucción inmediata (GDPR)
+            state.selfieImage = null;
+            state.cedulaFront = null;
+            state.cedulaBack = null;
+            selfieImage.src = '';
+            selfieImage.classList.add('hidden');
+            selfieVideo.classList.add('hidden');
+            selfiePlaceholder.textContent = '🧹 Datos destruidos (GDPR)';
+            selfiePlaceholder.classList.remove('hidden');
+            cedulaFrontPreview.innerHTML = '🧹 Destruido';
+            cedulaBackPreview.innerHTML = '🧹 Destruido';
+            destructionNotice.classList.remove('hidden');
+
+            setTimeout(() => goToWizard(), 800);
+        });
+
+        // ================================================================
+        // 9. WIZARD ARCO
+        // ================================================================
+        const stepTitles = ['', '', '', '', 'Categorías de Datos', 'Justificación', 'Documentos'];
+
+        function goToWizard() {
+            state.currentStep = 4;
+            showStep(4);
+        }
+
+        function renderWizardStep(step) {
+            const inst = state.selectedInstitution;
+            if (!inst) return;
+            let html = `
+                <div class="mb-4">
+                    <div class="flex items-center gap-2 text-sm text-blue-600 font-semibold">
+                        <i class="fas fa-chevron-circle-right"></i> Paso ${step} de 8: ${stepTitles[step] || ''}
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2 mt-1 text-sm text-gray-500 border-b pb-3">
+                        <span class="font-bold text-gray-700">${inst.name}</span>
+                        <span class="text-gray-300">|</span>
+                        <span class="text-xs text-gray-400"><i class="far fa-envelope mr-1"></i> ${inst.email}</span>
+                        <span class="ml-auto text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full"><i class="fas fa-check-circle"></i> ${state.verificationMethod}</span>
+                    </div>
+                </div>
+            `;
+
+            if (step === 4) {
+                const cats = [
+                    { id: 'personal', label: 'Información Personal', items: ['Nombre completo', 'RUT/Cédula', 'Fecha nacimiento', 'Dirección residencial'] },
+                    { id: 'contacto', label: 'Contacto', items: ['Teléfono móvil', 'Teléfono fijo', 'Dirección trabajo', 'Referencias personales'] },
+                    { id: 'financiera', label: 'Financiera', items: ['Número de cuenta', 'Historial crediticio', 'Ingresos declarados', 'Movimientos', 'Tarjetas'] },
+                    { id: 'laboral', label: 'Laboral', items: ['Empresa', 'Cargo', 'Antigüedad', 'Salario'] },
+                    { id: 'biometricos', label: 'Biométricos', items: ['Huella', 'Reconocimiento facial', 'Firma', 'Voz'] },
+                ];
+                html += `<h3 class="text-lg font-semibold text-gray-700 mb-3">Categorías de datos afectados</h3>
+                <div class="space-y-3 max-h-72 overflow-y-auto pr-2">`;
+                cats.forEach(cat => {
+                    const isChecked = state.selectedCategories.includes(cat.id);
+                    html += `<div class="border border-gray-200 rounded-xl p-3">
+                        <label class="flex items-center gap-2 font-medium text-gray-700 cursor-pointer">
+                            <input type="checkbox" class="cat-main" data-cat-id="${cat.id}" ${isChecked ? 'checked' : ''}> ${cat.label}
+                        </label>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-1 mt-2 ml-6">`;
+                    cat.items.forEach(item => {
+                        const itemId = `${cat.id}-${item.replace(/\s/g,'').toLowerCase()}`;
+                        const isItemChecked = state.selectedCategories.includes(itemId);
+                        html += `<label class="flex items-center gap-1.5 text-sm text-gray-600 cursor-pointer">
+                            <input type="checkbox" class="sub-cat" data-parent="${cat.id}" value="${itemId}" ${isItemChecked ? 'checked' : ''}> ${item}
+                        </label>`;
+                    });
+                    html += `</div></div>`;
+                });
+                html += `</div>`;
+            }
+
+            if (step === 5) {
+                html += `<h3 class="text-lg font-semibold text-gray-700 mb-3">Justificación</h3>
+                <p class="text-sm text-gray-400 mb-3">Explica los motivos de tu solicitud (mínimo 10 caracteres).</p>
+                <div class="mb-3 flex flex-wrap gap-2">
+                    ${['Solicito acceso a todos mis datos personales almacenados.', 'He detectado información incorrecta o desactualizada.', 'La finalidad para la cual fueron recopilados ya se ha cumplido.', 'Me opongo al tratamiento para fines de marketing directo.'].map(t => `
+                        <button class="template-badge text-xs px-3 py-1.5 border border-gray-300 rounded-full text-gray-600 transition" onclick="document.getElementById('just-textarea').value = '${t.replace(/'/g, "\\'")}'; updateCharCount();">
+                            <i class="far fa-copy mr-1"></i> Usar
+                        </button>
+                    `).join('')}
+                </div>
+                <textarea id="just-textarea" rows="4" class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Describe detalladamente...">${state.justification}</textarea>
+                <p class="text-right text-xs text-gray-400 mt-1"><span id="char-count">${state.justification.length}</span>/1000</p>`;
+            }
+
+            if (step === 6) {
+                html += `<h3 class="text-lg font-semibold text-gray-700 mb-3">Documentos de soporte (Opcional)</h3>
+                <p class="text-sm text-gray-400 mb-4">PDF, DOC, DOCX, JPG, PNG. Máx. 10MB c/u. Hasta 5 archivos.</p>
+                <div class="file-drop-zone rounded-xl p-6 text-center cursor-pointer" id="file-drop-area">
+                    <i class="fas fa-cloud-upload-alt text-4xl text-gray-300 mb-2"></i>
+                    <p class="text-gray-500">Arrastra o haz clic para seleccionar</p>
+                    <input type="file" id="file-input" multiple class="hidden" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                    <button type="button" class="mt-2 px-4 py-1.5 bg-blue-50 text-blue-600 rounded-lg border border-blue-200" onclick="document.getElementById('file-input').click()">Seleccionar archivos</button>
+                </div>
+                <div id="file-list" class="mt-3 flex flex-wrap gap-2">
+                    ${state.files.map((f, idx) => `
+                        <span class="bg-gray-100 px-3 py-1.5 rounded-full text-sm flex items-center gap-2">
+                            <i class="fas fa-file text-blue-500"></i> ${f.name} (${(f.size/1024).toFixed(1)} KB)
+                            <i class="fas fa-times text-red-400 cursor-pointer hover:text-red-600" data-idx="${idx}"></i>
+                        </span>
+                    `).join('')}
+                </div>
+                <div class="mt-3 text-xs text-gray-400 bg-gray-50 p-3 rounded-lg"><i class="fas fa-info-circle mr-1"></i> En producción, estos archivos se adjuntarán al correo.</div>`;
+            }
+
+            stepContent.innerHTML = html;
+            attachWizardEvents(step);
+        }
+
+        function attachWizardEvents(step) {
+            if (step === 4) {
+                document.querySelectorAll('.cat-main').forEach(main => {
+                    main.addEventListener('change', (e) => {
+                        const parent = e.target.dataset.catId;
+                        document.querySelectorAll(`.sub-cat[data-parent="${parent}"]`).forEach(ch => ch.checked = e.target
+                            .checked);
+                        updateCategoriesState();
+                    });
+                });
+                document.querySelectorAll('.sub-cat').forEach(el => {
+                    el.addEventListener('change', updateCategoriesState);
+                });
+            }
+            if (step === 5) {
+                const ta = document.getElementById('just-textarea');
+                if (ta) {
+                    ta.addEventListener('input', (e) => {
+                        state.justification = e.target.value;
+                        document.getElementById('char-count').textContent = e.target.value.length;
+                    });
+                    // actualizar contador al cargar
+                    document.getElementById('char-count').textContent = state.justification.length;
+                }
+            }
+            if (step === 6) {
+                const fileInput = document.getElementById('file-input');
+                const dropArea = document.getElementById('file-drop-area');
+                if (fileInput) {
+                    fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
+                }
+                if (dropArea) {
+                    dropArea.addEventListener('dragover', (e) => { e.preventDefault();
+                        dropArea.classList.add('dragover'); });
+                    dropArea.addEventListener('dragleave', () => dropArea.classList.remove('dragover'));
+                    dropArea.addEventListener('drop', (e) => {
+                        e.preventDefault();
+                        dropArea.classList.remove('dragover');
+                        if (e.dataTransfer.files) handleFiles(e.dataTransfer.files);
+                    });
+                }
+                document.querySelectorAll('#file-list .fa-times').forEach(el => {
+                    el.addEventListener('click', (e) => {
+                        const idx = parseInt(e.target.dataset.idx);
+                        state.files.splice(idx, 1);
+                        renderWizardStep(6);
+                        updateWizardUI(6);
+                    });
+                });
+            }
+        }
+
+        function updateCategoriesState() {
+            state.selectedCategories = [];
+            document.querySelectorAll('.sub-cat:checked').forEach(el => state.selectedCategories.push(el.value));
+            document.querySelectorAll('.cat-main').forEach(main => {
+                const parent = main.dataset.catId;
+                const children = document.querySelectorAll(`.sub-cat[data-parent="${parent}"]`);
+                main.checked = Array.from(children).every(ch => ch.checked);
+            });
+        }
+
+        function handleFiles(fileList) {
+            const maxSize = 10 * 1024 * 1024;
+            const newFiles = Array.from(fileList).filter(f => f.size <= maxSize);
+            if (newFiles.length + state.files.length > 5) { alert('Máximo 5 archivos.'); return; }
+            state.files = [...state.files, ...newFiles];
+            renderWizardStep(6);
+            updateWizardUI(6);
+        }
+
+        function updateWizardUI(step) {
+            currentStepNum.textContent = step;
+            btnPrev.disabled = step === 4;
+            if (step === 7) {
+                btnNext.classList.add('hidden');
+                btnSubmit.classList.remove('hidden');
+            } else {
+                btnNext.classList.remove('hidden');
+                btnSubmit.classList.add('hidden');
+            }
+            stepCircles.forEach((circle, idx) => {
+                const num = idx + 4;
+                circle.classList.remove('bg-blue-600', 'text-white', 'bg-gray-200', 'text-gray-500', 'bg-green-500');
+                if (num < step) { circle.classList.add('bg-green-500', 'text-white');
+                    circle.textContent = '✓'; } else if (num === step) { circle.classList.add('bg-blue-600', 'text-white');
+                    circle.textContent = num; } else { circle.classList.add('bg-gray-200', 'text-gray-500');
+                    circle.textContent = num; }
+            });
+        }
+
+        btnNext.addEventListener('click', () => {
+            const s = state.currentStep;
+            if (s === 4 && state.selectedCategories.length === 0) { alert('Selecciona al menos una categoría.'); return; }
+            if (s === 5 && state.justification.trim().length < 10) { alert('Escribe una justificación de al menos 10 caracteres.'); return; }
+            if (s < 7) { state.currentStep = s + 1;
+                renderWizardStep(state.currentStep);
+                updateWizardUI(state.currentStep); }
+        });
+
+        btnPrev.addEventListener('click', () => {
+            if (state.currentStep > 4) {
+                state.currentStep = state.currentStep - 1;
+                renderWizardStep(state.currentStep);
+                updateWizardUI(state.currentStep);
+            }
+        });
+
+        btnBackToSearch.addEventListener('click', () => {
+            if (confirm('¿Volver al buscador? Se perderá el progreso.')) {
+                if (stream) { stream.getTracks().forEach(t => t.stop());
+                    stream = null; }
+                state.currentStep = 0;
+                showStep(0);
+                renderInstitutions(currentFilter, searchInput.value);
+            }
+        });
+
+        // ================================================================
+        // 10. ENVÍO REAL AL BACKEND (ARCO HUB QTMD)
+        // ================================================================
+        btnSubmit.addEventListener('click', async () => {
+            if (!state.isVerified) {
+                alert('Error de autenticación.');
+                return;
+            }
+
+            // Convertir archivos a Base64
+            const filesToSend = await Promise.all(state.files.map((file) => {
+                return new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        resolve({
+                            name: file.name,
+                            size: file.size,
+                            type: file.type,
+                            data: e.target.result,
+                        });
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }));
+
+            const payload = {
+                institution: state.selectedInstitution,
+                rut: state.rut || 'No disponible',
+                email: state.email || 'No disponible',
+                type: state.arcoType,
+                verificationMethod: state.verificationMethod,
+                categories: state.selectedCategories,
+                justification: state.justification,
+                files: filesToSend,
+                timestamp: new Date().toISOString(),
+                gdpr_compliant: true,
+                biometric_destroyed: state.verificationMethod.includes('Biométrico')
+            };
+
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Enviando...';
+
+            try {
+                const response = await fetch('http://localhost:3000/submit-arco', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload),
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Mostrar modal
+                    modalInst.textContent = state.selectedInstitution.name;
+                    modalType.textContent = state.arcoType;
+                    modalAuthLevel.textContent = state.verificationMethod;
+                    modalRut.textContent = state.rut || '---';
+
+                    // Mostrar aviso del correo de prueba
+                    if (result.previewUrl) {
+                        alert('✅ Solicitud enviada exitosamente!\n\n📧 Para ver el correo de prueba, abre este enlace:\n' +
+                            result.previewUrl);
+                    }
+
+                    modal.classList.remove('hidden');
+                } else {
+                    alert('❌ Error al enviar: ' + result.message);
+                }
+            } catch (error) {
+                alert('❌ Error de conexión. Asegúrate que el servidor esté corriendo en localhost:3000\nDetalle: ' +
+                    error.message);
+                console.error(error);
+            }
+
+            btnSubmit.disabled = false;
+            btnSubmit.innerHTML = '<i class="fas fa-paper-plane mr-1"></i> Enviar Solicitud';
+        });
+
+        // ================================================================
+        // 11. EVENTOS MODAL
+        // ================================================================
+        modalCloseBtn.addEventListener('click', () => {
+            modal.classList.add('hidden');
+            alert('✅ Proceso completado. Puedes iniciar otra solicitud.');
+        });
+        modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.add('hidden'); });
+
+        // ================================================================
+        // 12. INICIO
+        // ================================================================
+        renderInstitutions('all', '');
+        console.log('🚀 ARCO HUB QTMD v1.0 cargado.');
+        console.log('📌 Autor: María Isabel Egaña Bacarreza - RUT: 11.347.767-9');
+        console.log('🔒 Estándar GDPR / eIDAS 2.0 - Nivel 1 y Nivel 3 implementados.');
+        console.log('🌐 Backend esperado en http://localhost:3000');
+    </script>
+
+</body>
+</html>
