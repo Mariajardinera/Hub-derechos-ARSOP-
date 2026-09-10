@@ -6,90 +6,27 @@
     <title>ARCO HUB QTMD - Derechos ARCO</title>
     <!-- ========================================================
     AUTOR: María Isabel Egaña Bacarreza
-    RUT: chile
-    VERSIÓN: 1.0
+    RUT: CHILE
+    VERSIÓN: 1.1 (con consentimiento legal)
     OBRA REGISTRADA BAJO LEY DE PROPIEDAD INTELECTUAL N°17.336
     ======================================================== -->
-    <script src="https://cdn.tailwindcss.com">
-    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        body {
-            background: #f4f7fc;
-            font-family: 'Inter', system-ui, sans-serif;
-        }
-        .card-shadow {
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
-        }
-        .otp-input {
-            width: 3.5rem;
-            height: 4.5rem;
-            font-size: 2rem;
-            text-align: center;
-            border-radius: 12px;
-            border: 2px solid #d1d5db;
-            transition: 0.2s;
-        }
-        .otp-input:focus {
-            border-color: #2563eb;
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
-            outline: none;
-        }
-        .fade-in {
-            animation: fadeIn 0.4s ease;
-        }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(8px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .institution-item:hover {
-            background-color: #eff6ff;
-            border-color: #3b82f6;
-            cursor: pointer;
-        }
-        .template-badge:hover {
-            background-color: #dbeafe;
-            border-color: #3b82f6;
-            cursor: pointer;
-        }
-        .file-drop-zone {
-            border: 2px dashed #cbd5e1;
-            transition: 0.2s;
-        }
-        .file-drop-zone:hover,
-        .file-drop-zone.dragover {
-            border-color: #3b82f6;
-            background-color: #f8fafc;
-        }
-        .btn-verification:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        .destruction-badge {
-            background: #dcfce7;
-            color: #166534;
-            border: 1px solid #86efac;
-        }
-        #otp-inputs input {
-            width: 3.5rem;
-            height: 4.5rem;
-            font-size: 2rem;
-            text-align: center;
-            border-radius: 12px;
-            border: 2px solid #d1d5db;
-            transition: 0.2s;
-        }
-        #otp-inputs input:focus {
-            border-color: #2563eb;
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
-            outline: none;
-        }
+        body { background: #f4f7fc; font-family: 'Inter', system-ui, sans-serif; }
+        .card-shadow { box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05); }
+        .otp-input { width: 3.5rem; height: 4.5rem; font-size: 2rem; text-align: center; border-radius: 12px; border: 2px solid #d1d5db; transition: 0.2s; }
+        .otp-input:focus { border-color: #2563eb; box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1); outline: none; }
+        .fade-in { animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .institution-item:hover { background-color: #eff6ff; border-color: #3b82f6; cursor: pointer; }
+        .template-badge:hover { background-color: #dbeafe; border-color: #3b82f6; cursor: pointer; }
+        .file-drop-zone { border: 2px dashed #cbd5e1; transition: 0.2s; }
+        .file-drop-zone:hover, .file-drop-zone.dragover { border-color: #3b82f6; background-color: #f8fafc; }
+        .btn-verification:disabled { opacity: 0.5; cursor: not-allowed; }
+        .destruction-badge { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
+        #otp-inputs input { width: 3.5rem; height: 4.5rem; font-size: 2rem; text-align: center; border-radius: 12px; border: 2px solid #d1d5db; transition: 0.2s; }
+        #otp-inputs input:focus { border-color: #2563eb; box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1); outline: none; }
     </style>
 </head>
 <body>
@@ -104,7 +41,7 @@
             </div>
             <p class="text-gray-500 text-sm">Plataforma de Ejercicio de Derechos ARCO con Autenticación Proporcional</p>
             <div class="mt-2 inline-flex items-center gap-1 bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full border border-blue-200">
-                <i class="fas fa-check-circle"></i> v1.0 | Estándar GDPR / eIDAS 2.0
+                <i class="fas fa-check-circle"></i> v1.1 | Estándar GDPR / eIDAS 2.0
             </div>
             <div class="mt-1 text-[10px] text-gray-400">
                 Autor: María Isabel Egaña Bacarreza · RUT: 11.347.767-9
@@ -348,7 +285,52 @@
             </div>
         </div>
 
-        <!-- MODAL -->
+        <!-- MODAL DE CONSENTIMIENTO LEGAL -->
+        <div id="consent-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center hidden z-50 p-4">
+            <div class="bg-white max-w-lg w-full rounded-2xl shadow-2xl fade-in">
+                <div class="border-b border-gray-200 px-6 py-4">
+                    <h2 class="text-lg font-semibold text-gray-900">
+                        Antes de enviar tu solicitud
+                    </h2>
+                    <p class="mt-1 text-sm text-gray-500">
+                        Solicitud dirigida a: <span id="consent-entidad" class="font-medium text-gray-700">---</span>
+                    </p>
+                </div>
+
+                <div class="max-h-[60vh] overflow-y-auto px-6 py-4 space-y-4">
+                    <p class="text-sm leading-relaxed text-gray-600">
+                        Esta plataforma es un servicio independiente que facilita el ejercicio de los derechos ARCO (Acceso, Rectificación, Cancelación y Oposición) conforme a la Ley N° 21.719 sobre Protección de Datos Personales. <strong>No tiene afiliación, patrocinio ni autorización</strong> de las entidades financieras mencionadas. Los correos y canales de contacto utilizados corresponden a información publicada por dichas entidades para la recepción de solicitudes de titulares de datos.
+                    </p>
+
+                    <div class="space-y-3 border-t border-gray-100 pt-4">
+                        <label class="flex items-start gap-3 cursor-pointer">
+                            <input type="checkbox" id="consent-mandato" class="mt-1 h-4 w-4 rounded border-gray-300 text-blue-600">
+                            <span class="text-sm leading-relaxed text-gray-700">
+                                Declaro que soy el titular de los datos personales respecto de los cuales se ejerce este derecho ARCO, y autorizo expresamente a esta plataforma a remitir, en mi nombre y representación, la presente solicitud a <span id="consent-entidad-2" class="font-medium">---</span>, así como a recibir y reenviarme cualquier respuesta asociada, incluyendo el escalamiento automático ante la Agencia de Protección de Datos Personales en caso de falta de respuesta dentro de los plazos legales.
+                            </span>
+                        </label>
+
+                        <label class="flex items-start gap-3 cursor-pointer">
+                            <input type="checkbox" id="consent-veracidad" class="mt-1 h-4 w-4 rounded border-gray-300 text-blue-600">
+                            <span class="text-sm leading-relaxed text-gray-700">
+                                Confirmo que la información entregada en esta solicitud es veraz y corresponde a mi propia identidad y datos personales.
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-3 border-t border-gray-200 px-6 py-4">
+                    <button id="consent-cancelar" class="rounded-xl border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition">
+                        Cancelar
+                    </button>
+                    <button id="consent-aceptar" disabled class="rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition disabled:cursor-not-allowed disabled:bg-gray-300">
+                        Aceptar y enviar solicitud
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL DE CONFIRMACIÓN FINAL -->
         <div id="confirmation-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center hidden z-50 p-4">
             <div class="bg-white max-w-md w-full rounded-2xl p-6 text-center shadow-2xl fade-in">
                 <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -371,7 +353,7 @@
 
     <script>
         // ================================================================
-        // ARCO HUB QTMD v1.0 - Código completo (Frontend)
+        // ARCO HUB QTMD v1.1 - Código completo (Frontend con consentimiento)
         // Autor: María Isabel Egaña Bacarreza - RUT: 11.347.767-9
         // ================================================================
 
@@ -775,7 +757,6 @@
             biometricStatus.textContent = '✅ Verificación exitosa. Datos destruidos.';
             biometricStatus.className = 'text-sm text-green-600';
 
-            // Destrucción inmediata (GDPR)
             state.selfieImage = null;
             state.cedulaFront = null;
             state.cedulaBack = null;
@@ -997,14 +978,66 @@
             }
         });
 
-        // ---------- ENVÍO AL BACKEND (CORREGIDO PARA VERCEL) ----------
-        btnSubmit.addEventListener('click', async () => {
+        // ================================================================
+        // MODAL DE CONSENTIMIENTO LEGAL (antes del envío)
+        // ================================================================
+        const consentModal = document.getElementById('consent-modal');
+        const consentEntidad = document.getElementById('consent-entidad');
+        const consentEntidad2 = document.getElementById('consent-entidad-2');
+        const consentMandato = document.getElementById('consent-mandato');
+        const consentVeracidad = document.getElementById('consent-veracidad');
+        const consentAceptar = document.getElementById('consent-aceptar');
+        const consentCancelar = document.getElementById('consent-cancelar');
+
+        function actualizarBotonConsent() {
+            const ok = consentMandato.checked && consentVeracidad.checked;
+            consentAceptar.disabled = !ok;
+        }
+
+        consentMandato.addEventListener('change', actualizarBotonConsent);
+        consentVeracidad.addEventListener('change', actualizarBotonConsent);
+
+        consentCancelar.addEventListener('click', () => {
+            consentModal.classList.add('hidden');
+            consentMandato.checked = false;
+            consentVeracidad.checked = false;
+            actualizarBotonConsent();
+        });
+
+        consentAceptar.addEventListener('click', async () => {
+            const consentimientoRegistro = {
+                versionTexto: 'v1.0-2026-09-09',
+                timestamp: new Date().toISOString(),
+                ip: null,
+                entidad: state.selectedInstitution?.name || 'Desconocida',
+                checks: {
+                    mandato: consentMandato.checked,
+                    veracidad: consentVeracidad.checked,
+                }
+            };
+            console.log('📝 Registro de consentimiento:', consentimientoRegistro);
+            consentModal.classList.add('hidden');
+            await enviarSolicitudAlBackend(consentimientoRegistro);
+        });
+
+        // ================================================================
+        // ENVÍO AL BACKEND
+        // ================================================================
+        btnSubmit.addEventListener('click', () => {
             if (!state.isVerified) {
                 alert('Error de autenticación.');
                 return;
             }
+            // Mostrar modal de consentimiento
+            consentEntidad.textContent = state.selectedInstitution.name;
+            consentEntidad2.textContent = state.selectedInstitution.name;
+            consentMandato.checked = false;
+            consentVeracidad.checked = false;
+            actualizarBotonConsent();
+            consentModal.classList.remove('hidden');
+        });
 
-            // Convertir archivos a Base64
+        async function enviarSolicitudAlBackend(consentimiento) {
             const filesToSend = await Promise.all(state.files.map((file) => {
                 return new Promise((resolve) => {
                     const reader = new FileReader();
@@ -1031,15 +1064,14 @@
                 files: filesToSend,
                 timestamp: new Date().toISOString(),
                 gdpr_compliant: true,
-                biometric_destroyed: state.verificationMethod.includes('Biométrico')
+                biometric_destroyed: state.verificationMethod.includes('Biométrico'),
+                consent: consentimiento
             };
 
             btnSubmit.disabled = true;
             btnSubmit.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Enviando...';
 
             try {
-                // ---------- ¡CAMBIO IMPORTANTE! ----------
-                // URL RELATIVA para Vercel (NUNCA localhost)
                 const response = await fetch('/api/submit-arco', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -1069,9 +1101,9 @@
 
             btnSubmit.disabled = false;
             btnSubmit.innerHTML = '<i class="fas fa-paper-plane mr-1"></i> Enviar Solicitud';
-        });
+        }
 
-        // ---------- MODAL ----------
+        // ---------- MODAL DE CONFIRMACIÓN FINAL ----------
         modalCloseBtn.addEventListener('click', () => {
             modal.classList.add('hidden');
             alert('✅ Proceso completado. Puedes iniciar otra solicitud.');
@@ -1080,10 +1112,9 @@
 
         // ---------- INICIO ----------
         renderInstitutions('all', '');
-        console.log('🚀 ARCO HUB QTMD v1.0 cargado.');
-        console.log('📌 Autor: María Isabel Egaña Bacarreza - RUT: chile');
+        console.log('🚀 ARCO HUB QTMD v1.1 cargado con consentimiento legal.');
+        console.log('📌 Autor: María Isabel Egaña Bacarreza - RUT: CHILE');
         console.log('🔒 Estándar GDPR / eIDAS 2.0 - Nivel 1 y Nivel 3 implementados.');
-        console.log('🌐 Backend API en /api/submit-arco (Vercel)');
     </script>
 
 </body>
