@@ -6,7 +6,7 @@
     <title>ARCO HUB QTMD - Derechos ARCO</title>
     <!-- ========================================================
     AUTOR: María Isabel Egaña Bacarreza
-    RUT: 11.347.767-9
+    RUT: chile
     VERSIÓN: 1.0
     OBRA REGISTRADA BAJO LEY DE PROPIEDAD INTELECTUAL N°17.336
     ======================================================== -->
@@ -20,9 +20,6 @@
         }
         .card-shadow {
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
-        }
-        .step-indicator .step-circle {
-            transition: all 0.3s ease;
         }
         .otp-input {
             width: 3.5rem;
@@ -70,14 +67,6 @@
             border-color: #3b82f6;
             background-color: #f8fafc;
         }
-        .biometric-preview {
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
-            overflow: hidden;
-            max-width: 200px;
-            max-height: 150px;
-            object-fit: cover;
-        }
         .btn-verification:disabled {
             opacity: 0.5;
             cursor: not-allowed;
@@ -122,9 +111,7 @@
             </div>
         </div>
 
-        <!-- ========================================================= -->
-        <!-- PASO 0: BUSCADOR                                          -->
-        <!-- ========================================================= -->
+        <!-- PASO 0: BUSCADOR -->
         <div id="step-0" class="bg-white rounded-2xl card-shadow p-6 md:p-8 fade-in">
             <div class="flex items-center gap-2 text-sm text-blue-600 font-semibold mb-1">
                 <i class="fas fa-building"></i> Paso 1 de 8
@@ -146,15 +133,11 @@
                 <button data-filter="salud" class="filter-btn px-4 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 border border-gray-300 hover:bg-gray-200">🏥 Salud</button>
             </div>
 
-            <div id="institution-list" class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-3 max-h-72 overflow-y-auto">
-                <!-- Inyectado por JS -->
-            </div>
+            <div id="institution-list" class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-3 max-h-72 overflow-y-auto"></div>
             <p id="no-results" class="text-center text-gray-400 mt-4 hidden">No hay resultados.</p>
         </div>
 
-        <!-- ========================================================= -->
-        <!-- PASO 1: SELECCIÓN DE TIPO (determina Nivel de riesgo)    -->
-        <!-- ========================================================= -->
+        <!-- PASO 1: TIPO DE SOLICITUD -->
         <div id="step-1" class="hidden bg-white rounded-2xl card-shadow p-6 md:p-8 fade-in">
             <div class="flex items-center gap-2 text-sm text-blue-600 font-semibold mb-1">
                 <i class="fas fa-flag"></i> Paso 2 de 8
@@ -210,9 +193,7 @@
             </button>
         </div>
 
-        <!-- ========================================================= -->
-        <!-- PASO 2: AUTENTICACIÓN NIVEL 1 (OTP)                      -->
-        <!-- ========================================================= -->
+        <!-- PASO 2: OTP -->
         <div id="step-2-otp" class="hidden bg-white rounded-2xl card-shadow p-6 md:p-8 fade-in">
             <div class="flex items-center gap-2 text-sm text-blue-600 font-semibold mb-1">
                 <i class="fas fa-id-card"></i> Paso 3 de 8: Nivel 1 (OTP)
@@ -256,9 +237,7 @@
             </div>
         </div>
 
-        <!-- ========================================================= -->
-        <!-- PASO 3: AUTENTICACIÓN NIVEL 3 (BIOMÉTRICO FACIAL)        -->
-        <!-- ========================================================= -->
+        <!-- PASO 3: BIOMÉTRICO -->
         <div id="step-3-biometric" class="hidden bg-white rounded-2xl card-shadow p-6 md:p-8 fade-in">
             <div class="flex items-center gap-2 text-sm text-blue-600 font-semibold mb-1">
                 <i class="fas fa-fingerprint"></i> Paso 3 de 8: Nivel 3 (Biométrico)
@@ -266,7 +245,6 @@
             <h2 class="text-xl font-semibold text-gray-700">Verificación facial con destrucción inmediata</h2>
             <p class="text-gray-400 text-sm mb-4">Para solicitudes de alto riesgo, necesitamos verificar tu identidad con tu rostro y cédula. <strong>Las imágenes se destruyen tras la verificación</strong> (GDPR Art. 5).</p>
 
-            <!-- Campo RUT para nivel 3 -->
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-600 mb-1">RUT</label>
                 <input type="text" id="rut-input-bio" placeholder="12.345.678-9" class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
@@ -336,9 +314,7 @@
             </div>
         </div>
 
-        <!-- ========================================================= -->
-        <!-- WIZARD ARCO (Pasos 4–7)                                  -->
-        <!-- ========================================================= -->
+        <!-- WIZARD ARCO -->
         <div id="wizard-container" class="hidden">
             <div class="flex items-center justify-between mb-5 bg-white p-3 rounded-xl card-shadow">
                 <div class="flex items-center gap-3 text-sm text-gray-500">
@@ -357,9 +333,7 @@
                 </div>
             </div>
 
-            <div id="step-content" class="bg-white rounded-2xl card-shadow p-6 md:p-8 fade-in">
-                <!-- Renderizado por JS -->
-            </div>
+            <div id="step-content" class="bg-white rounded-2xl card-shadow p-6 md:p-8 fade-in"></div>
 
             <div class="flex justify-between mt-6">
                 <button id="btn-prev" class="px-6 py-2.5 border border-gray-300 rounded-xl text-gray-600 font-medium hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed">
@@ -374,9 +348,7 @@
             </div>
         </div>
 
-        <!-- ========================================================= -->
-        <!-- MODAL DE CONFIRMACIÓN FINAL                               -->
-        <!-- ========================================================= -->
+        <!-- MODAL -->
         <div id="confirmation-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center hidden z-50 p-4">
             <div class="bg-white max-w-md w-full rounded-2xl p-6 text-center shadow-2xl fade-in">
                 <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -399,13 +371,11 @@
 
     <script>
         // ================================================================
-        // ARCO HUB QTMD v1.0
+        // ARCO HUB QTMD v1.0 - Código completo (Frontend)
         // Autor: María Isabel Egaña Bacarreza - RUT: 11.347.767-9
         // ================================================================
 
-        // ================================================================
-        // 1. BASE DE DATOS DE INSTITUCIONES
-        // ================================================================
+        // ---------- BASE DE DATOS DE INSTITUCIONES ----------
         const institutions = [
             { id: 1, name: "Banco de Chile", category: "banco", email: "derechosarco@bancochile.cl", logo: "🏦" },
             { id: 2, name: "Banco Santander", category: "banco", email: "protecciondedatos@santander.cl", logo: "🏦" },
@@ -422,20 +392,16 @@
             { id: 13, name: "Isapre Banmédica", category: "salud", email: "datos@banmedica.cl", logo: "🏥" },
         ];
 
-        // ================================================================
-        // 2. ESTADO GLOBAL
-        // ================================================================
+        // ---------- ESTADO GLOBAL ----------
         const state = {
             currentStep: 0,
             selectedInstitution: null,
             arcoType: null,
             rut: '',
             email: '',
-            otpCode: '',
             selfieImage: null,
             cedulaFront: null,
             cedulaBack: null,
-            biometricVerified: false,
             isVerified: false,
             verificationMethod: '',
             selectedCategories: [],
@@ -443,9 +409,7 @@
             files: [],
         };
 
-        // ================================================================
-        // 3. DOM REFS
-        // ================================================================
+        // ---------- DOM REFS ----------
         const $ = (id) => document.getElementById(id);
         const step0 = $('step-0');
         const step1 = $('step-1');
@@ -504,12 +468,9 @@
         let otpTimerInterval = null;
         let generatedOtp = '';
         let stream = null;
-
-        // ================================================================
-        // 4. BUSCADOR
-        // ================================================================
         let currentFilter = 'all';
 
+        // ---------- BUSCADOR ----------
         function renderInstitutions(filter = 'all', query = '') {
             let filtered = institutions;
             if (filter !== 'all') filtered = filtered.filter(i => i.category === filter);
@@ -556,16 +517,13 @@
         });
         searchInput.addEventListener('input', (e) => renderInstitutions(currentFilter, e.target.value));
 
-        // ================================================================
-        // 5. NAVEGACIÓN
-        // ================================================================
+        // ---------- NAVEGACIÓN ----------
         function showStep(step) {
             step0.classList.add('hidden');
             step1.classList.add('hidden');
             step2Otp.classList.add('hidden');
             step3Bio.classList.add('hidden');
             wizardContainer.classList.add('hidden');
-
             if (step === 0) step0.classList.remove('hidden');
             else if (step === 1) step1.classList.remove('hidden');
             else if (step === 2) step2Otp.classList.remove('hidden');
@@ -582,7 +540,6 @@
             state.selectedInstitution = inst;
             state.arcoType = null;
             state.isVerified = false;
-            state.biometricVerified = false;
             state.rut = '';
             state.email = '';
             state.selfieImage = null;
@@ -592,9 +549,7 @@
             showStep(1);
         }
 
-        // ================================================================
-        // 6. PASO 1: TIPO
-        // ================================================================
+        // ---------- PASO 1: TIPO ----------
         document.getElementById('btn-continue-type').addEventListener('click', () => {
             const selected = document.querySelector('input[name="arco-type"]:checked');
             if (!selected) { alert('Selecciona un tipo de solicitud.'); return; }
@@ -619,9 +574,7 @@
             }
         });
 
-        // ================================================================
-        // 7. NIVEL 1: OTP
-        // ================================================================
+        // ---------- NIVEL 1: OTP ----------
         function startOtpTimer(seconds = 60) {
             if (otpTimerInterval) clearInterval(otpTimerInterval);
             otpTimer.classList.remove('hidden');
@@ -692,9 +645,7 @@
             startOtpTimer(60);
         });
 
-        // ================================================================
-        // 8. NIVEL 3: BIOMÉTRICO
-        // ================================================================
+        // ---------- NIVEL 3: BIOMÉTRICO ----------
         async function initBiometric() {
             if (stream) {
                 stream.getTracks().forEach(track => track.stop());
@@ -817,7 +768,6 @@
             await new Promise(r => setTimeout(r, 500));
             verificationProgress.classList.add('hidden');
             biometricSuccess.classList.remove('hidden');
-            state.biometricVerified = true;
             state.isVerified = true;
             state.verificationMethod = 'Biométrico (Nivel 3)';
             authBadge.textContent = 'Biométrico verificado';
@@ -841,9 +791,7 @@
             setTimeout(() => goToWizard(), 800);
         });
 
-        // ================================================================
-        // 9. WIZARD ARCO
-        // ================================================================
+        // ---------- WIZARD ----------
         const stepTitles = ['', '', '', '', 'Categorías de Datos', 'Justificación', 'Documentos'];
 
         function goToWizard() {
@@ -920,14 +868,7 @@
                     <input type="file" id="file-input" multiple class="hidden" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
                     <button type="button" class="mt-2 px-4 py-1.5 bg-blue-50 text-blue-600 rounded-lg border border-blue-200" onclick="document.getElementById('file-input').click()">Seleccionar archivos</button>
                 </div>
-                <div id="file-list" class="mt-3 flex flex-wrap gap-2">
-                    ${state.files.map((f, idx) => `
-                        <span class="bg-gray-100 px-3 py-1.5 rounded-full text-sm flex items-center gap-2">
-                            <i class="fas fa-file text-blue-500"></i> ${f.name} (${(f.size/1024).toFixed(1)} KB)
-                            <i class="fas fa-times text-red-400 cursor-pointer hover:text-red-600" data-idx="${idx}"></i>
-                        </span>
-                    `).join('')}
-                </div>
+                <div id="file-list" class="mt-3 flex flex-wrap gap-2"></div>
                 <div class="mt-3 text-xs text-gray-400 bg-gray-50 p-3 rounded-lg"><i class="fas fa-info-circle mr-1"></i> En producción, estos archivos se adjuntarán al correo.</div>`;
             }
 
@@ -940,8 +881,7 @@
                 document.querySelectorAll('.cat-main').forEach(main => {
                     main.addEventListener('change', (e) => {
                         const parent = e.target.dataset.catId;
-                        document.querySelectorAll(`.sub-cat[data-parent="${parent}"]`).forEach(ch => ch.checked = e.target
-                            .checked);
+                        document.querySelectorAll(`.sub-cat[data-parent="${parent}"]`).forEach(ch => ch.checked = e.target.checked);
                         updateCategoriesState();
                     });
                 });
@@ -956,7 +896,6 @@
                         state.justification = e.target.value;
                         document.getElementById('char-count').textContent = e.target.value.length;
                     });
-                    // actualizar contador al cargar
                     document.getElementById('char-count').textContent = state.justification.length;
                 }
             }
@@ -967,8 +906,7 @@
                     fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
                 }
                 if (dropArea) {
-                    dropArea.addEventListener('dragover', (e) => { e.preventDefault();
-                        dropArea.classList.add('dragover'); });
+                    dropArea.addEventListener('dragover', (e) => { e.preventDefault(); dropArea.classList.add('dragover'); });
                     dropArea.addEventListener('dragleave', () => dropArea.classList.remove('dragover'));
                     dropArea.addEventListener('drop', (e) => {
                         e.preventDefault();
@@ -976,14 +914,7 @@
                         if (e.dataTransfer.files) handleFiles(e.dataTransfer.files);
                     });
                 }
-                document.querySelectorAll('#file-list .fa-times').forEach(el => {
-                    el.addEventListener('click', (e) => {
-                        const idx = parseInt(e.target.dataset.idx);
-                        state.files.splice(idx, 1);
-                        renderWizardStep(6);
-                        updateWizardUI(6);
-                    });
-                });
+                updateFileListUI();
             }
         }
 
@@ -1002,8 +933,25 @@
             const newFiles = Array.from(fileList).filter(f => f.size <= maxSize);
             if (newFiles.length + state.files.length > 5) { alert('Máximo 5 archivos.'); return; }
             state.files = [...state.files, ...newFiles];
-            renderWizardStep(6);
-            updateWizardUI(6);
+            updateFileListUI();
+        }
+
+        function updateFileListUI() {
+            const list = document.getElementById('file-list');
+            if (!list) return;
+            list.innerHTML = state.files.map((f, idx) => `
+                <span class="bg-gray-100 px-3 py-1.5 rounded-full text-sm flex items-center gap-2">
+                    <i class="fas fa-file text-blue-500"></i> ${f.name} (${(f.size/1024).toFixed(1)} KB)
+                    <i class="fas fa-times text-red-400 cursor-pointer hover:text-red-600" data-idx="${idx}"></i>
+                </span>
+            `).join('');
+            document.querySelectorAll('#file-list .fa-times').forEach(el => {
+                el.addEventListener('click', (e) => {
+                    const idx = parseInt(e.target.dataset.idx);
+                    state.files.splice(idx, 1);
+                    updateFileListUI();
+                });
+            });
         }
 
         function updateWizardUI(step) {
@@ -1019,10 +967,9 @@
             stepCircles.forEach((circle, idx) => {
                 const num = idx + 4;
                 circle.classList.remove('bg-blue-600', 'text-white', 'bg-gray-200', 'text-gray-500', 'bg-green-500');
-                if (num < step) { circle.classList.add('bg-green-500', 'text-white');
-                    circle.textContent = '✓'; } else if (num === step) { circle.classList.add('bg-blue-600', 'text-white');
-                    circle.textContent = num; } else { circle.classList.add('bg-gray-200', 'text-gray-500');
-                    circle.textContent = num; }
+                if (num < step) { circle.classList.add('bg-green-500', 'text-white'); circle.textContent = '✓'; }
+                else if (num === step) { circle.classList.add('bg-blue-600', 'text-white'); circle.textContent = num; }
+                else { circle.classList.add('bg-gray-200', 'text-gray-500'); circle.textContent = num; }
             });
         }
 
@@ -1030,9 +977,7 @@
             const s = state.currentStep;
             if (s === 4 && state.selectedCategories.length === 0) { alert('Selecciona al menos una categoría.'); return; }
             if (s === 5 && state.justification.trim().length < 10) { alert('Escribe una justificación de al menos 10 caracteres.'); return; }
-            if (s < 7) { state.currentStep = s + 1;
-                renderWizardStep(state.currentStep);
-                updateWizardUI(state.currentStep); }
+            if (s < 7) { state.currentStep = s + 1; renderWizardStep(state.currentStep); updateWizardUI(state.currentStep); }
         });
 
         btnPrev.addEventListener('click', () => {
@@ -1045,17 +990,14 @@
 
         btnBackToSearch.addEventListener('click', () => {
             if (confirm('¿Volver al buscador? Se perderá el progreso.')) {
-                if (stream) { stream.getTracks().forEach(t => t.stop());
-                    stream = null; }
+                if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
                 state.currentStep = 0;
                 showStep(0);
                 renderInstitutions(currentFilter, searchInput.value);
             }
         });
 
-        // ================================================================
-        // 10. ENVÍO REAL AL BACKEND (ARCO HUB QTMD)
-        // ================================================================
+        // ---------- ENVÍO AL BACKEND (CORREGIDO PARA VERCEL) ----------
         btnSubmit.addEventListener('click', async () => {
             if (!state.isVerified) {
                 alert('Error de autenticación.');
@@ -1096,27 +1038,24 @@
             btnSubmit.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Enviando...';
 
             try {
-                const response = await fetch('http://localhost:3000/submit-arco', {
+                // ---------- ¡CAMBIO IMPORTANTE! ----------
+                // URL RELATIVA para Vercel (NUNCA localhost)
+                const response = await fetch('/api/submit-arco', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload),
                 });
 
                 const result = await response.json();
 
                 if (result.success) {
-                    // Mostrar modal
                     modalInst.textContent = state.selectedInstitution.name;
                     modalType.textContent = state.arcoType;
                     modalAuthLevel.textContent = state.verificationMethod;
                     modalRut.textContent = state.rut || '---';
 
-                    // Mostrar aviso del correo de prueba
                     if (result.previewUrl) {
-                        alert('✅ Solicitud enviada exitosamente!\n\n📧 Para ver el correo de prueba, abre este enlace:\n' +
-                            result.previewUrl);
+                        alert('✅ Solicitud enviada exitosamente!\n\n📧 Para ver el correo de prueba, abre este enlace:\n' + result.previewUrl);
                     }
 
                     modal.classList.remove('hidden');
@@ -1124,8 +1063,7 @@
                     alert('❌ Error al enviar: ' + result.message);
                 }
             } catch (error) {
-                alert('❌ Error de conexión. Asegúrate que el servidor esté corriendo en localhost:3000\nDetalle: ' +
-                    error.message);
+                alert('❌ Error de conexión con el servidor.\nDetalle: ' + error.message);
                 console.error(error);
             }
 
@@ -1133,23 +1071,19 @@
             btnSubmit.innerHTML = '<i class="fas fa-paper-plane mr-1"></i> Enviar Solicitud';
         });
 
-        // ================================================================
-        // 11. EVENTOS MODAL
-        // ================================================================
+        // ---------- MODAL ----------
         modalCloseBtn.addEventListener('click', () => {
             modal.classList.add('hidden');
             alert('✅ Proceso completado. Puedes iniciar otra solicitud.');
         });
         modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.add('hidden'); });
 
-        // ================================================================
-        // 12. INICIO
-        // ================================================================
+        // ---------- INICIO ----------
         renderInstitutions('all', '');
         console.log('🚀 ARCO HUB QTMD v1.0 cargado.');
-        console.log('📌 Autor: María Isabel Egaña Bacarreza - RUT: 11.347.767-9');
+        console.log('📌 Autor: María Isabel Egaña Bacarreza - RUT: chile');
         console.log('🔒 Estándar GDPR / eIDAS 2.0 - Nivel 1 y Nivel 3 implementados.');
-        console.log('🌐 Backend esperado en http://localhost:3000');
+        console.log('🌐 Backend API en /api/submit-arco (Vercel)');
     </script>
 
 </body>
